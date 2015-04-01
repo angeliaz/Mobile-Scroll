@@ -40,7 +40,7 @@ section,article{display: block;}
 .content4 {
 	background: url(../images/bg4.jpg);
 }
-.content5 {
+.content-end {
 	background: url(../images/bg5.jpg);
 	-webkit-box-align: center;
     -webkit-box-pack: center;
@@ -93,7 +93,7 @@ section,article{display: block;}
   -webkit-perspective: 1000;
 }
 
-.content5 .header .title {
+.content-end .header .title {
 	color: #000;
 }
 
@@ -117,7 +117,7 @@ section,article{display: block;}
 	letter-spacing: 8px;
 }
 
-.content5 .copyright {
+.content-end .copyright {
 	position: absolute;
 	width: 100%;
 	left: 0;
@@ -148,38 +148,38 @@ section,article{display: block;}
 }
 
 /*bounceInLeft*/
-	@-webkit-keyframes bounceInLeft {
-  		0%, 60%, 75%, 90%, 100% {
-    		-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);  }
-            0% {
-			    opacity: 0;
-			    -webkit-transform: translate3d(-280px, 0, 0);
-			            transform: translate3d(-280px, 0, 0);
-			  }
+@-webkit-keyframes bounceInLeft {
+		0%, 60%, 75%, 90%, 100% {
+		-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);  }
+        0% {
+		    opacity: 0;
+		    -webkit-transform: translate3d(-280px, 0, 0);
+		            transform: translate3d(-280px, 0, 0);
+		  }
 
-			  60% {
-			    opacity: 1;
-			    -webkit-transform: translate3d(12px, 0, 0);
-			            transform: translate3d(12px, 0, 0);
-			  }
+		  60% {
+		    opacity: 1;
+		    -webkit-transform: translate3d(12px, 0, 0);
+		            transform: translate3d(12px, 0, 0);
+		  }
 
-			  75% {
-			    -webkit-transform: translate3d(-7px, 0, 0);
-			            transform: translate3d(-7px, 0, 0);
-			  }
+		  75% {
+		    -webkit-transform: translate3d(-7px, 0, 0);
+		            transform: translate3d(-7px, 0, 0);
+		  }
 
-			  90% {
-			    -webkit-transform: translate3d(3px, 0, 0);
-			            transform: translate3d(3px, 0, 0);
-			  }
+		  90% {
+		    -webkit-transform: translate3d(3px, 0, 0);
+		            transform: translate3d(3px, 0, 0);
+		  }
 
-			  100% {
-			    -webkit-transform: none;
-			            transform: none;
-			  }
+		  100% {
+		    -webkit-transform: none;
+		            transform: none;
+		  }
 
-	}
+}
 
 .bgPart {
 	margin-top: -140px;

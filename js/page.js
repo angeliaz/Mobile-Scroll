@@ -44,6 +44,7 @@
 
 			this.initParam(settings);
 			this.initCustomSetting(settings);
+			this.createDom();
 			this.initDomStyle(this.bannerData);
 			this.initAnimation();
 			this.bindEvent();
@@ -75,8 +76,8 @@
 		// item为每页的配置数据
 		getBannerData: function (item) {
 
-			var defaultBanner = this.banner; // 默认banner数据
-
+			var defaultBanner = this.bannerDefault; // 默认banner数据
+			console.log()
 			return {
 				height: typeof item.height === 'undefined' ? defaultBanner.height : item.height,
 				bottom: typeof item.bottom === 'undefined' ? defaultBanner.bottom : item.bottom,
@@ -109,9 +110,10 @@
 
 		createDom: function () {
 
-			
-			var i = 0, this.total = this.page, arr = [], bannerData = [];
+			// console.log(123)
+			var i = 0, arr = [], bannerData = [];
 			var pageInfo = this.pageInfo;
+			this.total = this.page;
 
 			// 如果给的数据少于总页数，取给的数据条数
 			if(pageInfo.length < this.total) {
@@ -123,9 +125,6 @@
 				var hasTipButton = false;
 				var item = pageInfo[i];
 				var bannerInfo = this.getBannerData(item.banner);
-				var background = typeof item.background === 'undefined' ? this.backgroundDefault : item.background;
-
-				bannerData.push(bannerInfo);
 				
 				// 如果pageInfo中没有给出配置，就取默认的hasTipButtonDefault
 				if(typeof item.hasTipButton !== 'undefined') {
@@ -133,29 +132,48 @@
 				} else {
 					hasTipButton = this.hasTipButtonDefault;
 				}
+				console.log(hasTipButton)
 
-				arr.push('<section class="content content'+ i +'">');
+				arr.push('<section class="content content'+ (i + 1) +'">');
 				arr.push(	this.createBanner(bannerInfo));
 				if(hasTipButton) {
 					arr.push(	'<div class="tip"></div>');
 				} else {
-					arr.push(	'<div class="tip style="display:none;"></div>');
+					arr.push(	'<div class="tip" style="display:none;"></div>');
 				}
 				arr.push('</section>');
 
 			}
 
-			this.bannerData = bannerData;
-
-			$('.wrapNode').html(arr.join(''));
+			$(this.wrapNode).html(arr.join('') + $(this.wrapNode).html());
 
 		},
 
 		// 初始化自定义的样式
 		initDomStyle: function (data) {
+			
+			var i = 0, len = this.total;
+			var pageInfo = this.pageInfo;
+			var bannerData = this.bannerData;
 
-			// 设置背景图
-			// $('.content' + i).css('background', 'url(' + background + ')');
+			for(; i < len; i++) {
+				
+				var item = pageInfo[i];
+				var bannerItem = this.getBannerData(item.banner);
+				var $content = $('.content' + (i + 1));
+
+				var background = typeof item.background === 'undefined' ? this.backgroundDefault : item.background;
+
+				// 设置背景图
+				$content.css('background', 'url(' + background + ')');
+				// 设置banner样式
+				$content.find('.bg').css('background', bannerItem.background);
+				$content.find('.pageWrap').height(bannerItem.height);
+				$content.find('.pageWrap').css('bottom', bannerItem.bottom);
+				$content.find('.bg-move').css('opacity', bannerItem.opacity);
+				$content.find('p').css('color', bannerItem.color);
+
+			}
 
 		},
 
@@ -182,8 +200,6 @@
 			var $word2 = $scroll.find('.word2');
 			var $word3 = $scroll.find('.word3');
 			var $bgPart = $scroll.find('.bg');
-			
-			
 
 			$('.wrap').on('touchstart', function (e) {
 
@@ -220,7 +236,7 @@
 
 					// 向上滑
 					if(direction === 'up') {
-						if(_this.currentPage < 5) {
+						if(_this.currentPage < (_this.page + 1)) {
 							$scroll.css({"-webkit-transform" : "translate3d(0px, " + (top - height) + "px, 0px);"});
 							_this.currentPage++;
 						}
@@ -230,7 +246,6 @@
 							_this.currentPage--;
 						}
 					}
-
 
 					$bgPart.addClass('bg-move');
 					$word1.addClass('word1-move');
