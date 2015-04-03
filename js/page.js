@@ -13,6 +13,12 @@
 			opacity: 0.6,			    // 文字的背景透明度
 			color: '#000'		    	// 文字的颜色
 		},
+		shareData: {
+			imgUrl: "http://angeliaw.com/mobile/images/bg1.jpg",
+	        link: 'http://angeliaw.com/mobile/index.html',
+	        title: '那年长夜，他们相遇',
+	        desc: '那年长夜，他们相遇，她以为是头一回遇上他，只有他知道，时光隧道的那一端他们曾有过的甜蜜'
+		},
 		pageInfo: [
 
 		]
@@ -24,6 +30,10 @@
 			wordClass: 'word'
 		},{},{},{},{}
 	]; 
+
+
+
+
 
 	function Scroll () {
 
@@ -77,7 +87,7 @@
 		getBannerData: function (item) {
 
 			var defaultBanner = this.bannerDefault; // 默认banner数据
-			console.log()
+			
 			return {
 				height: typeof item.height === 'undefined' ? defaultBanner.height : item.height,
 				bottom: typeof item.bottom === 'undefined' ? defaultBanner.bottom : item.bottom,
@@ -110,7 +120,6 @@
 
 		createDom: function () {
 
-			// console.log(123)
 			var i = 0, arr = [], bannerData = [];
 			var pageInfo = this.pageInfo;
 			this.total = this.page;
@@ -132,7 +141,6 @@
 				} else {
 					hasTipButton = this.hasTipButtonDefault;
 				}
-				console.log(hasTipButton)
 
 				arr.push('<section class="content content'+ (i + 1) +'">');
 				arr.push(	this.createBanner(bannerInfo));
@@ -165,7 +173,7 @@
 				var background = typeof item.background === 'undefined' ? this.backgroundDefault : item.background;
 
 				// 设置背景图
-				$content.css('background', 'url(' + background + ')');
+				$content.css('background-image', 'url(' + background + ')');
 				// 设置banner样式
 				$content.find('.bg').css('background', bannerItem.background);
 				$content.find('.pageWrap').height(bannerItem.height);
@@ -202,7 +210,6 @@
 			var $bgPart = $scroll.find('.bg');
 
 			$('.wrap').on('touchstart', function (e) {
-
 				var touch = e.touches[0];
 				
 				_this.startX = touch.pageX;
@@ -253,10 +260,53 @@
 					$word3.addClass('word3-move');
 				}
 				
-				$('.content5').find('.share').on('click', function () {
-					$('.mask').css('display', 'block');
-				})
 			});
+
+			// 分享遮罩
+			$('.content-end').find('.share').on('click', function () {
+				$('.mask').css('display', 'block');
+			});
+
+			$('.content-end').find('.mask').on('click', function () {
+				$(this).css('display', 'none');
+			});
+			
+		},
+
+		// 微信分享
+		weixinShare: function () {
+
+			var shareData = this.shareData;
+			
+			// IOS
+			doc.title = shareData.title;
+			$('.weixinSharePic').attr('src', shareData.imgUrl);
+		 
+			// Android
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	    		
+
+			    WeixinJSBridge.on('menu:share:appmessage', function() {
+			    	
+			        WeixinJSBridge.invoke('sendAppMessage', {
+			            "img_url": shareData.imgUrl,
+			            "link": shareData.link,
+			            "desc": shareData.desc,
+			            "title": shareData.title
+			        }, function() {});
+			    });
+
+			    WeixinJSBridge.on('menu:share:timeline', function() {
+			    	
+			        WeixinJSBridge.invoke('shareTimeline', {
+			            "img_url": shareData.imgUrl,
+			            "link": shareData.link,
+			            "desc": shareData.desc,
+			            "title": shareData.title
+			        }, function() {});
+			    });
+			}, false);
+
 		}
 
 

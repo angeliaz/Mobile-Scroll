@@ -31,25 +31,21 @@ section,article{display: block;}
     /*-webkit-box-align: center;
     -webkit-box-pack: center;*/
 } 
-.content2 {
-	background: url(../images/bg2.jpg);
-}
-.content3 {
-	background: url(../images/bg3.jpg);
-}
-.content4 {
-	background: url(../images/bg4.jpg);
-}
-.content-end {
-	background: url(../images/bg5.jpg);
-	-webkit-box-align: center;
-    -webkit-box-pack: center;
-}
 
 .content p {
 	line-height: 28px;
 	color: #000;
 	margin: 0 20px;
+}
+
+.content-end {
+	background-image: url(../images/bg5.jpg);
+	-webkit-box-align: center;
+    -webkit-box-pack: center;
+}
+
+.content-end .hidden {
+	display: none;
 }
 
 .pageWrap {
